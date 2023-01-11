@@ -18,7 +18,7 @@ export const StartPage = () => {
         </Typography>
 
         <Typography mt={2} variant="h5" component="h5">
-          {id}
+          Secret Code: {id}
         </Typography>
         <Button sx={{ mt: 3 }}>Button To Somewhere....</Button>
       </Wrapper>
