@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
 
 import "./App.css";
 import { NotFound } from "./components/NotFound";
@@ -7,7 +8,6 @@ import { StartPage } from "./pages/Start";
 
 function App() {
   return (
-    // <Router basename={`/${process.env.PUBLIC_URL}`}>
     <Router>
       <Routes>
         <Route path="" element={<Index />} />
