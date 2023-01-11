@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import logo from "../logo.svg";
 import React from "react";
 
-export const Index = () => {
+export const Home = () => {
   const param = useParams();
 
   const id = param.id;
