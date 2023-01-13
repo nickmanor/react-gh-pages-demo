@@ -1,11 +1,13 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 import { Wrapper } from "./Start.styles";
 import { Landing } from "../components/Landing";
 import { InfoItem } from "../components/InfoItem";
+import { getSession, saveCart } from "../services/punchoutService";
+import { CartItems } from "../types/CartTypes";
 
 export type SessionInfo = {};
 
@@ -13,29 +15,35 @@ export const StartPage: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
-  const [sessionInfo, setSessionInfo] = useState("");
+  const [cartData, setCart] = useState<CartItems>({} as CartItems);
 
-  const { data, isLoading, error } = useQuery<string[]>(
+  const { data, isLoading, isError } = useQuery<string[]>(
     ["sessionInfo", id],
     () => getSession(id!)
   );
 
-  const getSession = (id: string) => {
-    return fetch(
-      `https://ulfpunchoutdev.azurewebsites.net/punchout/get-punch/${id}`
-    ).then((data) => data.json());
-  };
+  const cartMutation = useMutation((cartData: CartItems) => {
+    return saveCart(id!, cartData);
+  });
 
-  return isLoading || data === null ? (
-    <div>Loading...</div>
-  ) : (
+  if (isLoading || data === null) return <div>Loading...</div>;
+  if (isError) return <div>ERROR</div>;
+
+  return (
     <Container>
       <Wrapper>
         <Landing />
         {data!.map((value, i) => (
           <InfoItem key={i} info={value} />
         ))}{" "}
-        <Button sx={{ mt: 3 }}>Button To Somewhere....</Button>
+        <Button
+          onClick={() => {
+            cartMutation.mutate({ items: [{ productCode: "123456", qty: 5 }] });
+          }}
+          sx={{ mt: 3 }}
+        >
+          Button To Somewhere....
+        </Button>
       </Wrapper>
     </Container>
   );
