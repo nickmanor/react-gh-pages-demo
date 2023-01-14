@@ -19,8 +19,9 @@ export const saveCart = async (id: string, items: CartItems) => {
   api.put(`/cart/${id}`, items);
 };
 
-export const getCart = async (id: string): Promise<any> => {
+export const getCart = async (id: string): Promise<CartItems> => {
   console.log("Get Cart Items");
 
-  api.get(`/cart/${id}`);
+  const { data } = await api.get(`/cart/${id}`);
+  return data;
 };
