@@ -49,7 +49,10 @@ export const StartPage: React.FC = () => {
           onClick={() => {
             cartMutation.mutate({
               items: [
-                { productCode: "123456", qty: cartData!.items[0].qty + 1 },
+                {
+                  productCode: "123456",
+                  qty: cartData ? cartData.items[0].qty + 1 : 1,
+                },
               ],
             });
           }}
