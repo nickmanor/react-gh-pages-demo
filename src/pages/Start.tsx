@@ -51,7 +51,7 @@ export const StartPage: React.FC = () => {
               items: [
                 {
                   productCode: "123456",
-                  qty: cartData ? cartData.items[0].qty + 1 : 1,
+                  qty: cartData!.items.length ? cartData!.items[0].qty + 1 : 1,
                 },
               ],
             });
