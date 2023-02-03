@@ -22,19 +22,22 @@ export const StartPage: React.FC = () => {
     () => getSession(id!)
   );
 
-  const { data: cartData, isLoading: cartIsLoading } = useQuery<CartItems>(
-    ["cartData", id],
-    () => getCart(id!),
-    { placeholderData: { items: [] } }
-  );
+  // const { data: cartData, isLoading: cartIsLoading } = useQuery<CartItems>(
+  //   ["cartData", id],
+  //   () => getCart(id!),
+  //   { placeholderData: { items: [] } }
+  // );
 
-  const cartMutation = useMutation((cartData: CartItems) => {
-    return saveCart(id!, cartData);
-  });
+  // const cartMutation = useMutation((cartData: CartItems) => {
+  //   return saveCart(id!, cartData);
+  // });
 
-  console.log("cd", cartData);
+  // console.log("cd", cartData);
 
-  if (isLoading || cartIsLoading || cartData === null || data === null)
+  // if (cartIsLoading || cartData === null)
+  // return <div>Loading...</div>;
+
+  if (isLoading || data === null)
     return <div>Loading...</div>;
   if (isError) return <div>ERROR</div>;
 
@@ -45,7 +48,7 @@ export const StartPage: React.FC = () => {
         {data!.map((value, i) => (
           <InfoItem key={i} info={value} />
         ))}{" "}
-        <Button
+        {/* <Button
           onClick={() => {
             cartMutation.mutate({
               items: [
@@ -59,12 +62,12 @@ export const StartPage: React.FC = () => {
           sx={{ mt: 3 }}
         >
           Button To Somewhere....
-        </Button>
-        {cartData!.items.map((value, i) => (
+        </Button> */}
+        {/* {cartData!.items.map((value, i) => (
           <p key={i}>
             {value.productCode}:{value.qty}
           </p>
-        ))}
+        ))} */}
       </Wrapper>
     </Container>
   );
