@@ -2,11 +2,12 @@ import axios from "axios";
 import { CartItems } from "../types/CartTypes";
 
 const api = axios.create({
-  baseURL: "https://ulfpunchoutdev.azurewebsites.net/punchout",
+  //baseURL: "https://ulfpunchoutdev.azurewebsites.net/punchout",
+  baseURL: "https://test.ulfweb.com/punchout",
 });
 
 export const getSession = async (id: string) => {
-  const { data } = await api.get(`/get-punch/${id}`);
+  const { data } = await api.get(`session/${id}/session`);
 
   console.log("SessionData", data);
 
