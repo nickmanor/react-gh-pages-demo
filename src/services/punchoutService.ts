@@ -162,7 +162,7 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
       var bodyFormData = new FormData();
       bodyFormData.append("cxml-urlencoded", response.data.message);
 
-      fetch(response.data.returnUrl, { method: 'POST', body: bodyFormData, mode: 'no-cors' })
+      fetch(response.data.returnUrl, { method: 'POST', body: bodyFormData })
         .then(res => console.log('Success', res))
         .catch(error => console.error('Error', error))      
 
