@@ -27,7 +27,7 @@ export const StartPage: React.FC = () => {
 
   const { data, isLoading, isError } = useQuery<ISessionItem>(
     ["sessionInfo", id],
-    () => getSession(id!)
+    () => getSession(id!), {staleTime: Infinity}
   );
 
 

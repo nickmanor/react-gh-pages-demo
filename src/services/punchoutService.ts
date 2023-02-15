@@ -153,7 +153,7 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
           manufacturerName: "bob"
       }
       ]    
-  }
+  }  
 
   api.post(`/session/${id}/order`, order)
     .then((response) => {
@@ -162,7 +162,11 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
       var bodyFormData = new FormData();
       bodyFormData.append("cxml-urlencoded", response.data.message);
 
-      api.postForm(response.data.returnUrl, bodyFormData);
+      fetch(response.data.returnUrl, { method: 'POST', body: bodyFormData })
+        .then(res => console.log('Success', res))
+        .catch(error => console.error('Error', error))      
+
+      //api.postForm(response.data.returnUrl, bodyFormData);
 
     })
 
