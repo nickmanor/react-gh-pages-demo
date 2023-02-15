@@ -1,41 +1,33 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 import { Wrapper } from "./Start.styles";
 import { Landing } from "../components/Landing";
 import { InfoItem } from "../components/InfoItem";
-import { getSession, saveCart, getCart } from "../services/punchoutService";
-import { CartItems } from "../types/CartTypes";
+import { getSession } from "../services/punchoutService";
 
 export type SessionInfo = {};
+
+export interface ISessionItem {
+  id?: string | undefined;
+  buyerCookie?: string | undefined;
+  userId?: string | undefined;
+  firstName?: string | undefined;
+  lastName?: string | undefined;
+  returnUrl?: string | undefined;
+  startDateTime?: Date;  
+}
 
 export const StartPage: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
-  //const [cartData, setCart] = useState<CartItems>({} as CartItems);
-
-  const { data, isLoading, isError } = useQuery<string[]>(
+  const { data, isLoading, isError } = useQuery<ISessionItem>(
     ["sessionInfo", id],
     () => getSession(id!)
   );
-
-  // const { data: cartData, isLoading: cartIsLoading } = useQuery<CartItems>(
-  //   ["cartData", id],
-  //   () => getCart(id!),
-  //   { placeholderData: { items: [] } }
-  // );
-
-  // const cartMutation = useMutation((cartData: CartItems) => {
-  //   return saveCart(id!, cartData);
-  // });
-
-  // console.log("cd", cartData);
-
-  // if (cartIsLoading || cartData === null)
-  // return <div>Loading...</div>;
 
   if (isLoading || data === null)
     return <div>Loading...</div>;
@@ -45,9 +37,8 @@ export const StartPage: React.FC = () => {
     <Container>
       <Wrapper>
         <Landing />
-        {data!.map((value, i) => (
-          <InfoItem key={i} info={value} />
-        ))}{" "}
+        <div><pre>{JSON.stringify(data, null, 2)}</pre></div>
+        
         {/* <Button
           onClick={() => {
             cartMutation.mutate({
@@ -62,12 +53,7 @@ export const StartPage: React.FC = () => {
           sx={{ mt: 3 }}
         >
           Button To Somewhere....
-        </Button> */}
-        {/* {cartData!.items.map((value, i) => (
-          <p key={i}>
-            {value.productCode}:{value.qty}
-          </p>
-        ))} */}
+        </Button> */}        
       </Wrapper>
     </Container>
   );
