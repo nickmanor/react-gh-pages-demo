@@ -40,14 +40,13 @@ export const StartPage: React.FC = () => {
     <Container>
       <Wrapper>
         <Landing />
-        <div><pre>{JSON.stringify(data, null, 2)}</pre></div>
-        
         <Button
           sx={{ mt: 3 }}
           onClick={() => postCart(id!, data!)}
         >
-          Button To Somewhere....
-        </Button>        
+          Click Here to Test Checkout
+        </Button> 
+        <div><pre>{JSON.stringify(data, null, 2)}</pre></div>               
       </Wrapper>
     </Container>
   );
