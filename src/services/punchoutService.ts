@@ -155,19 +155,51 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
       ]    
   }  
 
-  api.post(`/session/${id}/order`, order)
-    .then((response) => {
-      console.log(response.data);
+    const res = await api.post(`/session/${id}/order`, order)
+    console.log(res.data);
 
       var bodyFormData = new URLSearchParams();
-      bodyFormData.append("cxml-urlencoded", response.data.message);
+      bodyFormData.append("cxml-urlencoded", res.data.message);
 
-      fetch(response.data.returnUrl, { method: 'POST', body: bodyFormData, headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' } })
-        .then(res => console.log('Success', res))
-        .catch(error => console.error('Error', error))      
+      // fetch(response.data.returnUrl, { method: 'POST', body: bodyFormData, headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' } })
+      //   .then(res => console.log('Success', res))
+      //   .catch(error => console.error('Error', error))      
 
       //api.postForm(response.data.returnUrl, bodyFormData);
 
-    })
+      
+      
+  post(res.data.returnUrl, bodyFormData);
+}
 
+export type KeyValuePairNamed = [key: string, value: string] // "key" and "value" labels
+
+/**
+ * sends a request to the specified url from a form. this will change the window location.
+ * @param {string} path the path to send the post request to
+ * @param {object} params the parameters to add to the url
+ * @param {string} [method=post] the method to use on the form
+ */
+
+ function post(path: string, params: URLSearchParams, method='post') {
+
+  // The rest of this code assumes you are not using a library.
+  // It can be made less verbose if you use one.
+  const form = document.createElement('form');
+  form.method = method;
+  form.action = path;
+
+   params.forEach((val, key) => {
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = val;
+
+    console.log("got here", key, val);
+
+    form.appendChild(hiddenField);
+   })
+   
+  document.body.appendChild(form);
+  form.submit();
 }
