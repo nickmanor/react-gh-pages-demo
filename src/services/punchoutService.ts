@@ -145,10 +145,10 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
       [
       <OrderItem>{
           qty: 1,
-          productCode: "123456",
+          productCode: "50478",
           unitPrice: 50.00,
           unitOfMeasure: "EA",
-          description: "hello world",
+          description: "hello worlds",
           classification: "8675309",
           manufacturerName: "bob inc."
       },
