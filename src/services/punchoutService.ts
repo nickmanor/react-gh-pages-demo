@@ -140,18 +140,27 @@ export const postCart = async (id: string, session: ISessionItem): Promise<any> 
   console.log("Post Cart");
 
   const order = <Order>{
-    totalCost: 50,
+    totalCost: 52.50,
     items: <OrderItem[]>
       [
       <OrderItem>{
           qty: 1,
           productCode: "123456",
-          unitPrice: 50,
+          unitPrice: 50.00,
           unitOfMeasure: "EA",
           description: "hello world",
           classification: "8675309",
-          manufacturerName: "bob"
-      }
+          manufacturerName: "bob inc."
+      },
+      <OrderItem>{
+        qty: 2,
+        productCode: "123456",
+        unitPrice: 1.25,
+        unitOfMeasure: "EA",
+        description: "Here is a much longer description to see if it rolls to another field.",
+        classification: "8675309",
+        manufacturerName: "bob inc."
+    }
       ]    
   }  
 
